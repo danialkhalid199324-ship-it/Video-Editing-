@@ -14,6 +14,17 @@
 | `earshot` | "Ears" for the agent: measure, describe, rank, compare audio; make sounds in code (forge) and render effects from its bank | [Leonxlnx/earshot](https://github.com/Leonxlnx/earshot) (commit 4ac3d2a, MIT) |
 | `real-sound` | Full soundtrack workflow from real licensed recordings: cue list, sourcing, licence audit, mix, QA, master, credits | [Leonxlnx/earshot](https://github.com/Leonxlnx/earshot) (commit 4ac3d2a, MIT) |
 
+## Sound library in this repo
+
+- `sfx-library/earshot-kits/{calm,crisp,launch}/` – effect kits rendered from earshot's bank (code-made sounds plus
+  15 fitted from CC0 recordings; 200 takes, all passing `earshot kit check`). Only `kit.json` / `kit.lock.json` are
+  committed; re-render the WAVs in ~10 s with
+  `tools/earshot/.venv/bin/python -m earshot kit render sfx-library/earshot-kits/<preset>/kit.json --out sfx-library/earshot-kits/<preset>`.
+- `sfx-library/recorded/` – put real recorded packs here; `real-sfx` is already configured to use it as its main
+  library (rebuild its index after adding files). Freesound refuses downloads from the cloud session, so add packs
+  from your own computer.
+- `real-sfx` also has the bundled uisfx UI cues ready.
+
 ## Setup the third-party skills still need
 
 - **earshot / real-sound**: the Python package is vendored at `tools/earshot`. Install once:

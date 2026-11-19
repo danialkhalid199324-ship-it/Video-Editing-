@@ -1,3 +1,10 @@
 .venv/
 __pycache__/
 *.egg-info/
+.cache/
+sfx-library/earshot-kits/**/*.wav
+sfx-library/recorded/**/*.wav
+sfx-library/recorded/**/*.mp3
+sfx-library/recorded/**/*.ogg
+sfx-library/recorded/**/*.flac
+.claude/skills/real-sfx/library_index.json
