@@ -21,13 +21,15 @@ Anonymous requests work (rate-limited). Always filter for commercial use up fron
 ```bash
 curl -sS -G "https://api.openverse.org/v1/audio/" \
   --data-urlencode "q=whoosh" \
-  --data-urlencode "category=sound_effect" \
   --data-urlencode "license_type=commercial,modification" \
   --data-urlencode "mature=false" \
   --data-urlencode "page_size=20" -o work/openverse/whoosh.json
 ```
 
-Useful parameters: `q`, `category` (`sound_effect`, `music`, `podcast`, `audiobook`, `pronunciation`), `license`
+Do not filter by `category=sound_effect`: Freesound, the largest source of effects, leaves `category` empty, so that
+filter returns nothing (checked November 2026). Search by words and length instead.
+
+Useful parameters: `q`, `category` (`music`, `podcast`, ... only for sources that set it), `license`
 (exact codes, e.g. `cc0,by,pdm`), `license_type` (`commercial`, `modification`, `all-cc`), `source`
 (e.g. `freesound`, `wikimedia_audio`, `ccmixter`, `jamendo`), `length` (`shortest`, `short`, `medium`, `long`),
 `extension` (`wav`, `mp3`, `ogg`, `flac`), `page`, `page_size`. One item: `GET /v1/audio/{id}/`.
