@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fx.css">
+<style>
+  .list { position: absolute; left: 86px; width: 864px; top: 196px; text-align: center; }
+  .row { position: relative; display: block; margin: 0 auto 24px; width: max-content; opacity: 0; }
+</style>
+</head>
+<body>
+<div class="list">
+  <div class="row"><span class="sketch-word">REAL SKILLS</span>
+    <svg class="ul" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" vector-effect="non-scaling-stroke" d="M4 15 C 52 7, 96 21, 150 13 S 246 7, 296 14"/></svg></div>
+  <div class="row"><span class="sketch-word">CONFIDENCE</span>
+    <svg class="ul" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" vector-effect="non-scaling-stroke" d="M5 11 C 70 18, 120 6, 170 14 S 262 19, 295 9"/></svg></div>
+  <div class="row"><span class="sketch-word">OPPORTUNITIES</span>
+    <svg class="ul" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" vector-effect="non-scaling-stroke" d="M3 13 C 46 20, 110 5, 160 12 S 250 21, 297 11"/></svg></div>
+</div>
+<script type="module">
+  import { prog, easeOutBack, easeIn, fontsReady } from "./fx.js";
+  const list = document.querySelector(".list");
+  const rows = [...document.querySelectorAll(".row")], paths = [...document.querySelectorAll(".ul path")];
+  // page t 0 = film 2.95 s; "real" 3.04, "confidence" 3.76, "opportunities" 4.52 (film time)
+  const starts = [0.05, 0.74, 1.47];
+  window.film = {
+    duration: 2.85,
+    ready: fontsReady(),
+    frame(t) {
+      const out = easeIn(prog(t, 2.7, 0.14));
+      rows.forEach((row, i) => {
+        const p = prog(t, starts[i], 0.18), e = easeOutBack(p, 2);
+        row.style.opacity = Math.min(p * 2, 1) * (1 - out);
+        row.style.transform = `translateY(${24 * (1 - e) - 24 * out}px) scale(${0.85 + 0.15 * e})`;
+        paths[i].style.strokeDashoffset = 1 - prog(t, starts[i] + 0.12, 0.22);
+      });
+      list.style.transform = `translateY(${-8 * prog(t, 0, 2.8)}px)`;
+    },
+  };
+</script>
+</body>
+</html>

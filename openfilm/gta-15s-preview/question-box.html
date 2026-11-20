@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fx.css">
+<style>
+  .card {
+    position: absolute; left: 110px; top: 200px; width: 820px; height: 245px; box-sizing: border-box;
+    padding: 26px 40px; border-radius: 40px; background: #ffffff; opacity: 0;
+    box-shadow: 0 0 0 5px #7b4dff, 0 22px 50px rgba(10, 6, 40, 0.45);
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 12px; padding: 8px 22px; border-radius: 999px;
+    background: #5a33d6; color: #ffffff; font: 900 34px/1 "Montserrat"; letter-spacing: 0.08em;
+  }
+  .chip .q {
+    width: 38px; height: 38px; border-radius: 50%; background: #ff9f1c; color: #1d1446;
+    display: inline-flex; align-items: center; justify-content: center; font: 900 28px/1 "Montserrat"; letter-spacing: 0;
+  }
+  .text { margin-top: 18px; font: 700 54px/1.12 "Inter"; color: #1d1446; }
+  .ch { display: none; }
+  .cursor { display: inline-block; width: 6px; height: 0.95em; margin-left: 4px; vertical-align: -0.1em; background: #7b4dff; border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="chip"><span class="q">?</span>QUESTION</div>
+  <div class="text"><span class="ch">W</span><span class="ch">h</span><span class="ch">a</span><span class="ch">t</span><span class="ch"> </span><span class="ch">m</span><span class="ch">a</span><span class="ch">k</span><span class="ch">e</span><span class="ch">s</span><span class="ch"> </span><span class="ch">t</span><span class="ch">r</span><span class="ch">a</span><span class="ch">i</span><span class="ch">n</span><span class="ch">i</span><span class="ch">n</span><span class="ch">g</span><span class="ch"> </span><span class="ch">s</span><span class="ch">t</span><span class="ch">i</span><span class="ch">c</span><span class="ch">k</span><span class="ch">?</span><span class="cursor"></span></div>
+</div>
+<script type="module">
+  import { prog, easeOutBack, fontsReady } from "./fx.js";
+  const card = document.querySelector(".card"), cursor = document.querySelector(".cursor");
+  const chars = [...document.querySelectorAll(".ch")];
+  window.film = {
+    duration: 1.98,
+    ready: fontsReady(),
+    frame(t) {
+      const p = prog(t, 0, 0.42), e = easeOutBack(p, 1.6);
+      card.style.opacity = Math.min(p * 2, 1);
+      card.style.transform = `translateY(${-260 * (1 - e)}px) rotate(${-4 * (1 - e)}deg)`;
+      chars.forEach((c, i) => { c.style.display = t >= 0.25 + i * 0.025 ? "inline" : "none"; });
+      cursor.style.opacity = Math.floor(t / 0.45) % 2 === 0 ? 1 : 0;
+    },
+  };
+</script>
+</body>
+</html>

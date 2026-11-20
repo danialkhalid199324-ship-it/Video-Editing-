@@ -1,0 +1,14 @@
+@font-face { font-family: "Montserrat"; font-weight: 900; src: url("assets/Montserrat-900.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("assets/Inter-700.woff2") format("woff2"); }
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: transparent; }
+/* The "sketch" look shared by the headline and the underlined words */
+.sketch-word {
+  font: 900 62px/1.08 "Montserrat"; color: #ffffff; letter-spacing: 0.01em;
+  -webkit-text-stroke: 10px rgba(12, 9, 34, 0.92); paint-order: stroke fill;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+.ul { position: absolute; left: -10px; right: -10px; bottom: -18px; height: 22px; overflow: visible; }
+.ul path {
+  fill: none; stroke: #ff9f1c; stroke-width: 9; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1; filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.45));
+}

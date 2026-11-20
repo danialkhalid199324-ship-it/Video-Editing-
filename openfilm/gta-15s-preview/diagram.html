@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fx.css">
+<style>
+  body { background: #121316; }
+  .stage { position: absolute; inset: 0; background: #121316; }
+  .heading {
+    position: absolute; left: 86px; width: 864px; top: 440px; text-align: center;
+    font: 900 84px/1.08 "Montserrat"; color: #ffffff; letter-spacing: 0.005em;
+  }
+  .heading .w { display: inline-block; opacity: 0; }
+  .heading .o { color: #f7a823; }
+  .pill {
+    position: absolute; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 16px;
+    padding: 18px 28px; border-radius: 16px; background: #1f2126; white-space: nowrap;
+    font: 700 40px/1 "Inter"; color: #ffffff; letter-spacing: 0.02em; opacity: 0;
+  }
+  .pill .dot { width: 14px; height: 14px; border-radius: 50%; background: #f7a823; }
+  .pill.small { font-size: 34px; padding: 16px 22px; gap: 12px; }
+  .pill.small .dot { width: 11px; height: 11px; background: #8c8f98; }
+  svg.wires { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: visible; }
+  .wires path { fill: none; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .wires .gold { stroke: #f7a823; }
+  .wires .grey { stroke: #6f737c; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="heading"><span class="w">BUILDING</span> <span class="w">WHAT</span> <span class="w">MATTERS</span> <span class="w o">FOR</span> <span class="w o">THE</span> <span class="w o">FUTURE</span></div>
+  <svg class="wires" viewBox="0 0 1080 1920" aria-hidden="true">
+    <path class="gold" pathLength="1" d="M540 846 V 900 H 210 V 950"/>
+    <path class="gold" pathLength="1" d="M540 846 V 950"/>
+    <path class="gold" pathLength="1" d="M540 846 V 900 H 870 V 950"/>
+    <path class="grey" pathLength="1" d="M210 1030 V 1080 H 540 V 1130"/>
+    <path class="grey" pathLength="1" d="M540 1030 V 1130"/>
+    <path class="grey" pathLength="1" d="M870 1030 V 1080 H 540 V 1130"/>
+  </svg>
+  <div class="pill" id="training" style="left: 540px; top: 770px"><span class="dot"></span>TRAINING</div>
+  <div class="pill small" id="skills" style="left: 210px; top: 955px"><span class="dot"></span>SKILLS</div>
+  <div class="pill small" id="confidence" style="left: 540px; top: 955px"><span class="dot"></span>CONFIDENCE</div>
+  <div class="pill small" id="opportunity" style="left: 870px; top: 955px"><span class="dot"></span>OPPORTUNITY</div>
+  <div class="pill" id="ready" style="left: 540px; top: 1136px"><span class="dot"></span>READY TO PRACTISE</div>
+</div>
+<script type="module">
+  import { prog, easeOut, easeOutBack, fontsReady } from "./fx.js";
+  const stage = document.querySelector(".stage");
+  const words = [...document.querySelectorAll(".heading .w")];
+  const wires = [...document.querySelectorAll(".wires path")];
+  const pill = (id) => document.getElementById(id);
+  // page t 0 = film 7.78 s ("quality"); "training" 8.16, "should" 8.48, "help" 8.72, "students" 8.98, "prepared" 9.90
+  const pop = (el, at, t) => {
+    const p = prog(t, at, 0.22), e = easeOutBack(p, 1.8);
+    el.style.opacity = Math.min(p * 2, 1);
+    el.style.transform = `translateX(-50%) translateY(${18 * (1 - e)}px) scale(${0.8 + 0.2 * e})`;
+  };
+  window.film = {
+    duration: 3.98,
+    ready: fontsReady(),
+    frame(t) {
+      stage.style.opacity = Math.min(prog(t, 0, 0.1) * 1, 1);
+      words.forEach((w, i) => {
+        const p = prog(t, 0.02 + i * 0.05, 0.24), e = easeOut(p);
+        w.style.opacity = p; w.style.transform = `translateY(${30 * (1 - e)}px)`;
+      });
+      pop(pill("training"), 0.32, t);
+      [0, 1, 2].forEach((i) => { wires[i].style.strokeDashoffset = 1 - easeOut(prog(t, 0.55, 0.22)); });
+      pop(pill("skills"), 0.68, t);
+      pop(pill("confidence"), 0.92, t);
+      pop(pill("opportunity"), 1.18, t);
+      [3, 4, 5].forEach((i) => { wires[i].style.strokeDashoffset = 1 - easeOut(prog(t, 1.75, 0.3)); });
+      pop(pill("ready"), 2.06, t);
+      stage.style.transform = `scale(${1 + 0.02 * prog(t, 0, 3.98)})`;
+    },
+  };
+</script>
+</body>
+</html>

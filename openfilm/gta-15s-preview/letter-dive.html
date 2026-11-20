@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fx.css">
+<style>
+  .headline { position: absolute; left: 86px; width: 864px; top: 196px; text-align: center; perspective: 900px; }
+  .line { position: relative; display: block; width: max-content; margin: 0 auto 20px; white-space: nowrap; }
+  .line .sketch-word { font-size: 78px; }
+  .ch { display: inline-block; opacity: 0; transform-origin: 50% 100%; }
+  .sp { display: inline-block; width: 0.3em; }
+</style>
+</head>
+<body>
+<div class="headline">
+  <div class="line l1"><span class="sketch-word"><span class="ch">M</span><span class="ch">O</span><span class="ch">R</span><span class="ch">E</span><span class="sp"></span><span class="ch">T</span><span class="ch">H</span><span class="ch">A</span><span class="ch">N</span><span class="sp"></span><span class="ch">A</span></span></div>
+  <div class="line l2"><span class="sketch-word"><span class="ch">C</span><span class="ch">E</span><span class="ch">R</span><span class="ch">T</span><span class="ch">I</span><span class="ch">F</span><span class="ch">I</span><span class="ch">C</span><span class="ch">A</span><span class="ch">T</span><span class="ch">E</span></span>
+    <svg class="ul" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" vector-effect="non-scaling-stroke" d="M4 15 C 52 7, 96 21, 150 13 S 246 7, 296 14"/></svg></div>
+</div>
+<script type="module">
+  import { prog, easeOutBack, easeIn, clamp, fontsReady } from "./fx.js";
+  const head = document.querySelector(".headline");
+  const l1 = [...document.querySelectorAll(".l1 .ch")], l2 = [...document.querySelectorAll(".l2 .ch")];
+  const ul = document.querySelector(".ul path");
+  // film times: "more" is said at 1.14 s, "certificate" at 1.54 s; the next shot's words arrive at 3.0 s
+  const dive = (els, base, stagger, t) => els.forEach((el, i) => {
+    const p = prog(t, base + i * stagger, 0.36), e = easeOutBack(p, 1.5), k = 1 - e;
+    el.style.opacity = clamp(p * 3);
+    el.style.transform = `translateY(${-170 * k}px) scale(${1 + 1.4 * k}) rotateX(${-85 * k}deg)`;
+  });
+  window.film = {
+    duration: 2.9,
+    ready: fontsReady(),
+    frame(t) {
+      dive(l1, 1.0, 0.03, t);
+      dive(l2, 1.45, 0.028, t);
+      ul.style.strokeDashoffset = 1 - prog(t, 2.08, 0.22);
+      const out = easeIn(prog(t, 2.75, 0.15));
+      head.style.opacity = 1 - out;
+      head.style.transform = `translateY(${-30 * out}px)`;
+    },
+  };
+</script>
+</body>
+</html>
