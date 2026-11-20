@@ -8,3 +8,5 @@ sfx-library/recorded/**/*.mp3
 sfx-library/recorded/**/*.ogg
 sfx-library/recorded/**/*.flac
 .claude/skills/real-sfx/library_index.json
+openfilm/*/assets/gta-talking-head.mp4
+openfilm/*/.film/

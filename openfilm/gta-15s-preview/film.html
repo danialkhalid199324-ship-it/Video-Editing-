@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, height=1920">
+<style>
+  .speaker { object-fit: cover; }
+  /* the middle sentence as a deliberate close-up: its box is 1.3x the frame, shifted so the face (about 46% across) sits centred */
+  .reframe { object-fit: cover; }
+</style>
+</head>
+<body>
+<section>
+  <!-- Captions on the film's time, word for word with the voice -->
+  <track kind="captions" src="assets/captions.vtt" srclang="en" label="English">
+</section>
+<section>
+  <!-- The spoken line, dead air trimmed; every word kept. Sentence 2 is slightly tighter so the two cuts read as deliberate. -->
+  <video id="line-1" src="assets/gta-talking-head.mp4#t=0.1,2.32" at="0" class="speaker"></video>
+  <video id="line-2" src="assets/gta-talking-head.mp4#t=2.72,6.3" at="2.22" class="reframe" style="left: -106px; top: -288px; width: 1404px; height: 2496px"></video>
+  <video id="line-3" src="assets/gta-talking-head.mp4#t=6.76,12.72" at="5.8" class="speaker"></video>
+  <!-- The last two seconds of the GTA logo animation -->
+  <video id="logo" src="assets/gta-talking-head.mp4#t=18.85,20.85" at="11.76" class="speaker"></video>
+</section>
+<section>
+  <!-- One subtle CC0 whoosh from OpenFilm's library, its peak on the cut to the logo -->
+  <audio id="logo-whoosh" src="assets/soft-airy-whoosh-5619b8.mp3" at="11.63" volume="0.35"></audio>
+</section>
+</body>
+</html>
